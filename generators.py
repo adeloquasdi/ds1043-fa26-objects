@@ -1,5 +1,6 @@
 """ Exercises to practice building generators"""
-from abc.collections import Sequence
+from collections.abc import Sequence, Generator
+from typing import Any
 
 # Up til now, we have always written functions that perform some computation
 # and returned a value or tuple of values. This works in many situations, but
@@ -25,30 +26,31 @@ def fib(stop: int|None = None) -> int:
         n += 1
 
 
-def powers_of(n: int) -> int:
+def powers_of(n: int) -> Generator[int]:
     """Generate a stream of powers of n"""
     yield n
 
         
-def chain(*sequences: Sequence[Any]) -> Any:
-    """Generate a single sequence from sequences"""
+def chain(*sequences: Sequence[Any]) -> Generator[Any]:
+    """Generate a single, ordered stream of items from any number of sequences"""
     yield 0
 
     
-def pairs(items: Sequence[Any]) -> tuple[Any, Any]:
+def pairs(items: Sequence[Any]) -> Generator[tuple[Any, Any]]:
     """Generate each unique pair of items. Raises a ValueError if provided with less than two items."""
     yield (0, 1)
 
 
-def flatten(nested: Sequence[Any]) -> Any:
+def flatten(nested: Sequence[Sequence | Any]) -> Generator[Any]:
     """Generaate a stream of items from the nested sequence in the order they appear"""
     # Hint: each time you come across a Sequence, `yield from flatten(subsequence)`
+    #       use `isinstance` to determine if something is a Sequence
 
 
 if __name__ == "__main__":
     fib(10)
     # should produce 0 1 1 2 3 5 8 13 21 34 55
-    # Replace the print function calls with yield to create a generator!
+    # Replace the print function calls with `yield` to create a generator!
     #
     # for x in fib(10):
     #     print(x)
